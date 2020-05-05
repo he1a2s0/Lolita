@@ -51,9 +51,8 @@ WHERE [Posts].[Id] = 1;", sql, false, true, false);
                 Assert.Equal(@"DELETE FROM [Users]
 WHERE ((
     SELECT COUNT(*)
-    FROM [Posts] AS [y]
-    WHERE [y].[UserId] = [Users].[Id]
-) = 0) AND ([Users].[Role] = 0);", sql, false, true, false);
+    FROM [Posts] AS [p]
+    WHERE [p].[UserId] = [Users].[Id]) = 0) AND ([Users].[Role] = 0);", sql, false, true, false);
             }
         }
 
