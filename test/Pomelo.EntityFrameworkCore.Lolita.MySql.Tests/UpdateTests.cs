@@ -74,7 +74,7 @@ WHERE `Users`.`Id` = 1;", sql, false, true, false);
             }
         }
 
-        [Fact(Skip = "EFCore3.1 使用类似于 @__time_n 的参数替换了 Where 中的 time 的值")]
+        [Fact]
         public void update_with_complex_where_predicate()
         {
             using (var db = new MySqlContext())
@@ -93,7 +93,8 @@ WHERE `Users`.`Id` IN (
     SELECT `p`.`Id`
     FROM `Posts` AS `p`
     WHERE (`p`.`IsHighlighted` OR `p`.`IsPinned`) AND (`p`.`Time` >= '2016-01-01 00:00:00.000000')
-) AND (`Users`.`Role` = 0);", sql, false, true, false);
+)
+ AND (`Users`.`Role` = 0);", sql, false, true, false);
             }
         }
 
