@@ -1,15 +1,17 @@
-﻿using System;
-using System.Text;
+﻿
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Storage;
+
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.Text;
 
 namespace Pomelo.EntityFrameworkCore.Lolita.Update
 {
@@ -56,41 +58,14 @@ namespace Pomelo.EntityFrameworkCore.Lolita.Update
             return sqlGenerationHelper.DelimitIdentifier(field.Table);
         }
 
-        protected virtual string GetTableName(EntityType type)
+        protected virtual string GetTableName(IEntityType type)
         {
-            string tableName;
-            var anno = type.FindAnnotation("Relational:TableName");
-            if (anno != null)
-                tableName = anno.Value.ToString();
-            else
-            {
-                var prop = dbSetFinder.FindSets(context).SingleOrDefault(y => y.ClrType == type.ClrType);
-                if (!prop.Equals(default(DbSetProperty)))
-                    tableName = prop.Name;
-                else
-                    tableName = type.ClrType.Name;
-            }
-            return tableName;
+            return type.GetTableName();
         }
 
-        protected virtual string GetSchemaName(EntityType type)
+        protected virtual string GetSchemaName(IEntityType type)
         {
-            string schema = null;
-
-            // first, try to get schema from fluent API or data annotation
-            IAnnotation anno = type.FindAnnotation("Relational:Schema");
-            if (anno != null)
-                schema = anno.Value.ToString();
-            if (schema == null)
-            {
-                // otherwise, try to get schema from context default
-                anno = context.Model.FindAnnotation("Relational:DefaultSchema");
-                if (anno != null)
-                    schema = anno.Value.ToString();
-            }
-            // TODO: ideally, switch to `et.Relational().Schema`, to cover all cases at once
-
-            return schema;
+            return type.GetSchema();
         }
 
         public virtual SqlFieldInfo VisitField<TEntity, TProperty>(Expression<Func<TEntity, TProperty>> exp)
@@ -104,8 +79,7 @@ namespace Pomelo.EntityFrameworkCore.Lolita.Update
                 throw new ArgumentException("Too many parameters in the expression.");
             }
             var param = exp.Parameters.Single();
-            var entities = (IDictionary<string, EntityType>)EntityTypesField.GetValue(context.Model);
-            var et = entities.Where(x => x.Value.ClrType == typeof(TEntity)).Single().Value;
+            var et = context.Model.FindEntityType(typeof(TEntity));
             ret.Table = GetTableName(et);
             ret.Schema = GetSchemaName(et);
 

@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>2.2.0</VersionPrefix>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <VersionPrefix>2.3.0</VersionPrefix>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>Pomelo.EntityFrameworkCore.Lolita.PostgreSQL</AssemblyName>
     <PackageId>Pomelo.EntityFrameworkCore.Lolita2.PostgreSQL</PackageId>
     <PackageTags>Entity Framework Core;Extensions;Bulk Update;Bulk Delete</PackageTags>

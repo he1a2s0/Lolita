@@ -1,25 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+﻿
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
+
 using Pomelo.EntityFrameworkCore.Lolita.Update;
-using Pomelo.EntityFrameworkCore.Lolita.Delete;
 
 namespace Microsoft.EntityFrameworkCore
 {
     public class PostgreSQLLolitaDbOptionExtension : IDbContextOptionsExtension
     {
-        public string LogFragment => "Pomelo.EFCore.Lolita";
-        
-        public bool ApplyServices(IServiceCollection services)
+        public DbContextOptionsExtensionInfo Info => new LolitaDbContextOptionsExtensionInfo(this);
+
+        public void ApplyServices(IServiceCollection services)
         {
             services
                 .AddScoped<ISetFieldSqlGenerator, PostgreSQLSetFieldSqlGenerator>();
-
-            return true;
-        }
-
-        public long GetServiceProviderHashCode()
-        {
-            return 86216188623903;
         }
 
         public void Validate(IDbContextOptions options)

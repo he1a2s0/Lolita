@@ -1,9 +1,12 @@
-﻿using System.Linq;
+﻿
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Logging;
+
+using Pomelo.EntityFrameworkCore.Lolita.Delete;
+
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.Extensions.Logging;
-using Pomelo.EntityFrameworkCore.Lolita.Delete;
 
 namespace Microsoft.EntityFrameworkCore
 {
@@ -26,7 +29,7 @@ namespace Microsoft.EntityFrameworkCore
             return executor.Execute(context, self.GenerateBulkDeleteSql());
         }
 
-        public static Task<int> DeleteAsync<TEntity>(this IQueryable<TEntity> self, CancellationToken cancellationToken = default(CancellationToken))
+        public static Task<int> DeleteAsync<TEntity>(this IQueryable<TEntity> self, CancellationToken cancellationToken = default)
             where TEntity : class, new()
         {
             var executor = self.GetService<ILolitaDeleteExecutor>();

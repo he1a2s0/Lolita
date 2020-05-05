@@ -1,26 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
+
 using Pomelo.EntityFrameworkCore.Lolita.Update;
-using Pomelo.EntityFrameworkCore.Lolita.Delete;
 
 namespace Microsoft.EntityFrameworkCore
 {
     public class MySqlLolitaDbOptionExtension : IDbContextOptionsExtension
     {
-        public string LogFragment => "Pomelo.EFCore.Lolita";
+        public DbContextOptionsExtensionInfo Info => new LolitaDbContextOptionsExtensionInfo(this);
 
-        public bool ApplyServices(IServiceCollection services)
+        public void ApplyServices(IServiceCollection services)
         {
             services
                 .AddScoped<ISetFieldSqlGenerator, MySqlSetFieldSqlGenerator>();
-
-            return true;
-        }
-
-        public long GetServiceProviderHashCode()
-        {
-            return 86216188623902;
         }
 
         public void Validate(IDbContextOptions options)

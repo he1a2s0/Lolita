@@ -1,14 +1,15 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using System.Linq;
+﻿
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
+
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pomelo.EntityFrameworkCore.Lolita.Delete
 {
     public interface ILolitaDeleteExecutor
     {
-        string GenerateSql<TEntity>(IQueryable<TEntity> lolita) where TEntity : class, new();
+        string GenerateSql<TEntity>(IQueryable<TEntity> lolita) where TEntity : class;
 
         int Execute(DbContext db, string sql);
 

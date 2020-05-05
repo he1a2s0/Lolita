@@ -7,10 +7,10 @@ namespace Pomelo.EntityFrameworkCore.Lolita.Update
 {
     public interface ILolitaUpdateExecutor
     {
-        string GenerateSql<TEntity>(LolitaSetting<TEntity> lolita, RelationalQueryModelVisitor visitor) where TEntity : class, new();
+        string GenerateSql<TEntity>(LolitaSetting<TEntity> lolita) where TEntity : class;
 
         int Execute(DbContext db, string sql, object[] param);
 
-        Task<int> ExecuteAsync(DbContext db, string sql, CancellationToken cancellationToken = default(CancellationToken), params object[] param);
+        Task<int> ExecuteAsync(DbContext db, string sql, CancellationToken cancellationToken = default, params object[] param);
     }
 }

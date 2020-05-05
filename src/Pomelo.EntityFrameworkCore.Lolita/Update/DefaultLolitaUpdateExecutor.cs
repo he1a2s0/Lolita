@@ -1,62 +1,64 @@
-﻿using System;
+﻿
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Query;
 
 namespace Pomelo.EntityFrameworkCore.Lolita.Update
 {
     public class DefaultLolitaUpdateExecutor : ILolitaUpdateExecutor
     {
-        public DefaultLolitaUpdateExecutor(ICurrentDbContext CurrentDbContext, ISqlGenerationHelper SqlGenerationHelper, IDbSetFinder DbSetFinder)
+        private readonly ISqlGenerationHelper _sqlGenerationHelper;
+
+        public DefaultLolitaUpdateExecutor(ISqlGenerationHelper SqlGenerationHelper)
         {
-            sqlGenerationHelper = SqlGenerationHelper;
-            dbSetFinder = DbSetFinder;
-            context = CurrentDbContext.Context;
+            _sqlGenerationHelper = SqlGenerationHelper;
         }
 
-        private ISqlGenerationHelper sqlGenerationHelper;
-        private IDbSetFinder dbSetFinder;
-        private DbContext context;
-
-        public virtual string GenerateSql<TEntity>(LolitaSetting<TEntity> lolita, RelationalQueryModelVisitor visitor) where TEntity : class, new()
+        public virtual string GenerateSql<TEntity>(LolitaSetting<TEntity> lolita) where TEntity : class
         {
+            var originalSql = lolita.Query.ToSql(out IDictionary<string, string> tableAliases);
+
             var sb = new StringBuilder("UPDATE ");
             sb.Append(lolita.FullTable)
                 .AppendLine()
                 .Append("SET ")
                 .Append(string.Join($", { Environment.NewLine }    ", lolita.Operations))
                 .AppendLine()
-                .Append(ParseWhere(visitor, lolita.ShortTable))
-                .Append(sqlGenerationHelper.StatementTerminator);
+                .Append(ParseWhere(originalSql, tableAliases))
+                .Append(_sqlGenerationHelper.StatementTerminator);
 
             return sb.ToString();
         }
 
-        protected virtual string ParseWhere(RelationalQueryModelVisitor visitor, string Table)
+        protected virtual string ParseWhere(string sql, IDictionary<string, string> tableAliases)
         {
-            if (visitor == null || visitor.Queries.Count == 0)
-                return "";
-            var sql = visitor.Queries.First().ToString();
             var pos = sql.IndexOf("WHERE");
             if (pos < 0)
                 return "";
-            return sql.Substring(pos)
-                .Replace(sqlGenerationHelper.DelimitIdentifier(visitor.CurrentParameter.Name), Table);
+            sql = sql.Substring(pos);
+
+            foreach (var pair in tableAliases)
+            {
+                sql = sql.Replace(_sqlGenerationHelper.DelimitIdentifier(pair.Key), _sqlGenerationHelper.DelimitIdentifier(pair.Value));
+            }
+
+            return sql;
         }
 
         public virtual int Execute(DbContext db, string sql, object[] param)
         {
-            return db.Database.ExecuteSqlCommand(sql, param);
+            return db.Database.ExecuteSqlRaw(sql, param);
         }
 
-        public Task<int> ExecuteAsync(DbContext db, string sql, CancellationToken cancellationToken = default(CancellationToken), params object[] param)
+        public Task<int> ExecuteAsync(DbContext db, string sql, CancellationToken cancellationToken = default, params object[] param)
         {
-            return db.Database.ExecuteSqlCommandAsync(sql, param, cancellationToken);
+            return db.Database.ExecuteSqlRawAsync(sql, param, cancellationToken);
         }
     }
 }
