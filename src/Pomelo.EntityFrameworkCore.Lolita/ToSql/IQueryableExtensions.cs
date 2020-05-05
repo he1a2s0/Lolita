@@ -23,12 +23,11 @@ namespace Microsoft.EntityFrameworkCore
 
             aliases = selectExpression.Tables.Cast<TableExpression>().ToDictionary(_ => _.Alias, _ => _.Name);
 
-            var command = sqlGenerator.GetCommand(selectExpression);
-            var commandBuilder = sqlGenerator.GetType().GetProperty("Sql", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(sqlGenerator) as IRelationalCommandBuilder;
-            var mappingSource = commandBuilder.TypeMappingSource;
+            var parameterValues = relationalQueryContext.ParameterValues;
+
+            var (command, mappingSource) = GetRelationalComponents_v2(relationalCommandCache, sqlGenerator, parameterValues);
 
             string sql = command.CommandText;
-            var parameterValues = relationalQueryContext.ParameterValues;
 
             if (parameterValues.Any())
             {
@@ -43,6 +42,17 @@ namespace Microsoft.EntityFrameworkCore
             }
 
             return sql;
+        }
+
+        private static (IRelationalCommand, IRelationalTypeMappingSource) GetRelationalComponents_v2(RelationalCommandCache relationalCommandCache, QuerySqlGenerator sqlGenerator, IReadOnlyDictionary<string, object> parameterValues)
+        {
+#pragma warning disable EF1001 // Internal EF Core API usage.
+            var command = relationalCommandCache.GetRelationalCommand(parameterValues);
+#pragma warning restore EF1001 // Internal EF Core API usage.
+            var dependencies = sqlGenerator.GetType().GetProperty("Dependencies", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(sqlGenerator) as QuerySqlGeneratorDependencies;
+            var mappingSource = dependencies.RelationalCommandBuilderFactory.Create().TypeMappingSource;
+
+            return (command, mappingSource);
         }
 
         private static object Private(this object obj, string privateField) => obj?.GetType().GetField(privateField, BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(obj);
