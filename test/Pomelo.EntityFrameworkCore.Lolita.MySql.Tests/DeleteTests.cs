@@ -8,7 +8,7 @@ namespace Pomelo.EntityFrameworkCore.Lolita.MySql.Tests
 {
     public class DeleteTests
     {
-        [Fact(Skip = "Skipped")]
+        [Fact]
         public void delete_without_where_predicate()
         {
             using (var db = new MySqlContext())
@@ -21,7 +21,7 @@ namespace Pomelo.EntityFrameworkCore.Lolita.MySql.Tests
             }
         }
 
-        [Fact(Skip = "Skipped")]
+        [Fact]
         public void delete_with_simple_where_predicate()
         {
             using (var db = new MySqlContext())
@@ -35,7 +35,7 @@ WHERE `Posts`.`Id` = 1;", sql, false, true, false);
             }
         }
 
-        [Fact(Skip = "Skipped")]
+        [Fact]
         public void delete_with_complex_where_predicate()
         {
             using (var db = new MySqlContext())

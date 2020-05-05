@@ -56,7 +56,7 @@ namespace Pomelo.EntityFrameworkCore.Lolita.Update
 
         public Task<int> ExecuteAsync(DbContext db, string sql, CancellationToken cancellationToken = default(CancellationToken), params object[] param)
         {
-            return db.Database.ExecuteSqlCommandAsync(sql, cancellationToken, param);
+            return db.Database.ExecuteSqlCommandAsync(sql, param, cancellationToken);
         }
     }
 }
