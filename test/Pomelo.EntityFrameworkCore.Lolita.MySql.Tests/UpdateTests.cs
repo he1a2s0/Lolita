@@ -112,5 +112,18 @@ SET `Posts`.`IsHighlighted` = `IsPinned`
 ;", sql, false, true, false);
             }
         }
+
+        [Fact]
+        public void update_where_in()
+        {
+            var ids = new[] { 1, 2, 3 };
+
+            using (var db = new MySqlContext())
+            {
+                var sql = db.Users.Where(_ => ids.Contains(_.Id)).SetField(_ => _.Role).WithValue(UserRole.VIP).GenerateBulkUpdateSql();
+
+                Assert.NotNull(sql);
+            }
+        }
     }
 }
