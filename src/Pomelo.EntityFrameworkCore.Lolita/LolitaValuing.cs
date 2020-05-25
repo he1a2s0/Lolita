@@ -3,7 +3,7 @@
 namespace Pomelo.EntityFrameworkCore.Lolita
 {
     public class LolitaValuing<TEntity, TProperty>
-        where TEntity : class, new()
+        where TEntity : class
     {
         public LolitaSetting<TEntity> Inner { get; set; }
 

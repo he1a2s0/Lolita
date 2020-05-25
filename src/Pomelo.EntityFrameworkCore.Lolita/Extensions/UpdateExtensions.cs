@@ -14,7 +14,7 @@ namespace Microsoft.EntityFrameworkCore
     public static class UpdateExtensions
     {
         public static string GenerateBulkUpdateSql<TEntity>(this LolitaSetting<TEntity> self)
-            where TEntity : class, new()
+            where TEntity : class
         {
             var executor = self.Query.GetService<ILolitaUpdateExecutor>();
             var sql = executor.GenerateSql(self);
@@ -24,7 +24,7 @@ namespace Microsoft.EntityFrameworkCore
         }
 
         public static int Update<TEntity>(this LolitaSetting<TEntity> self)
-            where TEntity : class, new()
+            where TEntity : class
         {
             var executor = self.Query.GetService<ILolitaUpdateExecutor>();
             var context = self.Query.GetService<ICurrentDbContext>().Context;
@@ -32,7 +32,7 @@ namespace Microsoft.EntityFrameworkCore
         }
 
         public static Task<int> UpdateAsync<TEntity>(this LolitaSetting<TEntity> self, CancellationToken cancellationToken = default)
-            where TEntity : class, new()
+            where TEntity : class
         {
             var executor = self.Query.GetService<ILolitaUpdateExecutor>();
             var context = self.Query.GetService<ICurrentDbContext>().Context;

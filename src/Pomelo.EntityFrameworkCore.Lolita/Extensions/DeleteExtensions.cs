@@ -13,7 +13,7 @@ namespace Microsoft.EntityFrameworkCore
     public static class DeleteExtensions
     {
         public static string GenerateBulkDeleteSql<TEntity>(this IQueryable<TEntity> self)
-            where TEntity : class, new()
+            where TEntity : class
         {
             var executor = self.GetService<ILolitaDeleteExecutor>();
             var sql = executor.GenerateSql(self);
@@ -22,7 +22,7 @@ namespace Microsoft.EntityFrameworkCore
         }
 
         public static int Delete<TEntity>(this IQueryable<TEntity> self)
-            where TEntity : class, new()
+            where TEntity : class
         {
             var executor = self.GetService<ILolitaDeleteExecutor>();
             var context = self.GetService<ICurrentDbContext>().Context;
@@ -30,7 +30,7 @@ namespace Microsoft.EntityFrameworkCore
         }
 
         public static Task<int> DeleteAsync<TEntity>(this IQueryable<TEntity> self, CancellationToken cancellationToken = default)
-            where TEntity : class, new()
+            where TEntity : class
         {
             var executor = self.GetService<ILolitaDeleteExecutor>();
             var context = self.GetService<ICurrentDbContext>().Context;

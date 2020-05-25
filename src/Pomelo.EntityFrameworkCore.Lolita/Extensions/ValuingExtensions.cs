@@ -8,7 +8,7 @@ namespace Microsoft.EntityFrameworkCore
     public static class ValuingExtensions
     {
         public static LolitaSetting<TEntity> WithSQL<TEntity, TProperty>(this LolitaValuing<TEntity, TProperty> self, Func<string, ISqlGenerationHelper, string> sql, params object[] parameters)
-            where TEntity : class, new()
+            where TEntity : class
         {
             if (sql == null)
             {
@@ -35,12 +35,12 @@ namespace Microsoft.EntityFrameworkCore
         }
 
         public static LolitaSetting<TEntity> WithSQL<TEntity, TProperty>(this LolitaValuing<TEntity, TProperty> self, Func<string, string> sql, params object[] parameters)
-            where TEntity : class, new()
+            where TEntity : class
         {
             return self.WithSQL((x, y) => sql(x));
         }
         private static LolitaSetting<TEntity> valuing<TEntity, TProperty>(this LolitaValuing<TEntity, TProperty> self, string type, object value)
-            where TEntity : class, new()
+            where TEntity : class
         {
             var factory = self.GetService<ISetFieldSqlGenerator>();
             self.Inner.Parameters.Add(value);
@@ -50,199 +50,199 @@ namespace Microsoft.EntityFrameworkCore
         }
 
         public static LolitaSetting<TEntity> WithValue<TEntity, TProperty>(this LolitaValuing<TEntity, TProperty> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("WithValue", value);
 
         public static LolitaSetting<TEntity> Plus<TEntity>(this LolitaValuing<TEntity, long> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Plus", value);
 
         public static LolitaSetting<TEntity> Subtract<TEntity>(this LolitaValuing<TEntity, long> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Subtract", value);
 
         public static LolitaSetting<TEntity> Multiply<TEntity>(this LolitaValuing<TEntity, long> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Multiply", value);
 
         public static LolitaSetting<TEntity> Divide<TEntity>(this LolitaValuing<TEntity, long> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Divide", value);
 
         public static LolitaSetting<TEntity> Mod<TEntity>(this LolitaValuing<TEntity, long> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Mod", value);
 
         public static LolitaSetting<TEntity> Plus<TEntity>(this LolitaValuing<TEntity, int> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Plus", value);
 
         public static LolitaSetting<TEntity> Subtract<TEntity>(this LolitaValuing<TEntity, int> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Subtract", value);
 
         public static LolitaSetting<TEntity> Multiply<TEntity>(this LolitaValuing<TEntity, int> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Multiply", value);
 
         public static LolitaSetting<TEntity> Divide<TEntity>(this LolitaValuing<TEntity, int> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Divide", value);
 
         public static LolitaSetting<TEntity> Mod<TEntity>(this LolitaValuing<TEntity, int> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Mod", value);
 
         public static LolitaSetting<TEntity> Plus<TEntity>(this LolitaValuing<TEntity, short> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Plus", value);
 
         public static LolitaSetting<TEntity> Subtract<TEntity>(this LolitaValuing<TEntity, short> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Subtract", value);
 
         public static LolitaSetting<TEntity> Multiply<TEntity>(this LolitaValuing<TEntity, short> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Multiply", value);
 
         public static LolitaSetting<TEntity> Divide<TEntity>(this LolitaValuing<TEntity, short> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Divide", value);
 
         public static LolitaSetting<TEntity> Mod<TEntity>(this LolitaValuing<TEntity, short> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Mod", value);
 
         public static LolitaSetting<TEntity> Plus<TEntity>(this LolitaValuing<TEntity, ulong> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Plus", value);
 
         public static LolitaSetting<TEntity> Subtract<TEntity>(this LolitaValuing<TEntity, ulong> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Subtract", value);
 
         public static LolitaSetting<TEntity> Multiply<TEntity>(this LolitaValuing<TEntity, ulong> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Multiply", value);
 
         public static LolitaSetting<TEntity> Divide<TEntity>(this LolitaValuing<TEntity, ulong> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Divide", value);
 
         public static LolitaSetting<TEntity> Mod<TEntity>(this LolitaValuing<TEntity, ulong> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Mod", value);
 
         public static LolitaSetting<TEntity> Plus<TEntity>(this LolitaValuing<TEntity, uint> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Plus", value);
 
         public static LolitaSetting<TEntity> Subtract<TEntity>(this LolitaValuing<TEntity, uint> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Subtract", value);
 
         public static LolitaSetting<TEntity> Multiply<TEntity>(this LolitaValuing<TEntity, uint> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Multiply", value);
 
         public static LolitaSetting<TEntity> Divide<TEntity>(this LolitaValuing<TEntity, uint> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Divide", value);
 
         public static LolitaSetting<TEntity> Mod<TEntity>(this LolitaValuing<TEntity, uint> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Mod", value);
 
         public static LolitaSetting<TEntity> Plus<TEntity>(this LolitaValuing<TEntity, ushort> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Plus", value);
 
         public static LolitaSetting<TEntity> Subtract<TEntity>(this LolitaValuing<TEntity, ushort> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Subtract", value);
 
         public static LolitaSetting<TEntity> Multiply<TEntity>(this LolitaValuing<TEntity, ushort> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Multiply", value);
 
         public static LolitaSetting<TEntity> Divide<TEntity>(this LolitaValuing<TEntity, ushort> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Divide", value);
 
         public static LolitaSetting<TEntity> Mod<TEntity>(this LolitaValuing<TEntity, ushort> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Mod", value); public static LolitaSetting<TEntity> Plus<TEntity>(this LolitaValuing<TEntity, double> self, object value)
-             where TEntity : class, new()
+             where TEntity : class
              => self.valuing("Plus", value);
 
         public static LolitaSetting<TEntity> Subtract<TEntity>(this LolitaValuing<TEntity, double> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Subtract", value);
 
         public static LolitaSetting<TEntity> Multiply<TEntity>(this LolitaValuing<TEntity, double> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Multiply", value);
 
         public static LolitaSetting<TEntity> Divide<TEntity>(this LolitaValuing<TEntity, double> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Divide", value);
 
         public static LolitaSetting<TEntity> Mod<TEntity>(this LolitaValuing<TEntity, double> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Mod", value); public static LolitaSetting<TEntity> Plus<TEntity>(this LolitaValuing<TEntity, float> self, object value)
-             where TEntity : class, new()
+             where TEntity : class
              => self.valuing("Plus", value);
 
         public static LolitaSetting<TEntity> Subtract<TEntity>(this LolitaValuing<TEntity, float> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Subtract", value);
 
         public static LolitaSetting<TEntity> Multiply<TEntity>(this LolitaValuing<TEntity, float> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Multiply", value);
 
         public static LolitaSetting<TEntity> Divide<TEntity>(this LolitaValuing<TEntity, float> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Divide", value);
 
         public static LolitaSetting<TEntity> Mod<TEntity>(this LolitaValuing<TEntity, float> self, object value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Mod", value);
 
         public static LolitaSetting<TEntity> Append<TEntity>(this LolitaValuing<TEntity, string> self, string value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Append", value);
 
         public static LolitaSetting<TEntity> Prepend<TEntity>(this LolitaValuing<TEntity, string> self, string value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("Prepend", value);
 
         public static LolitaSetting<TEntity> AddMilliseconds<TEntity>(this LolitaValuing<TEntity, DateTime> self, int value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("AddMilliseconds", value);
 
         public static LolitaSetting<TEntity> AddSeconds<TEntity>(this LolitaValuing<TEntity, DateTime> self, int value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("AddSeconds", value);
 
         public static LolitaSetting<TEntity> AddMinutes<TEntity>(this LolitaValuing<TEntity, DateTime> self, int value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("AddMinutes", value);
 
         public static LolitaSetting<TEntity> AddHours<TEntity>(this LolitaValuing<TEntity, DateTime> self, int value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("AddHours", value);
 
         public static LolitaSetting<TEntity> AddDays<TEntity>(this LolitaValuing<TEntity, DateTime> self, int value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("AddDays", value);
 
         public static LolitaSetting<TEntity> AddMonths<TEntity>(this LolitaValuing<TEntity, DateTime> self, int value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("AddMonths", value);
 
         public static LolitaSetting<TEntity> AddYears<TEntity>(this LolitaValuing<TEntity, DateTime> self, int value)
-            where TEntity : class, new()
+            where TEntity : class
             => self.valuing("AddYears", value);
     }
 }

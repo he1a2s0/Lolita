@@ -69,7 +69,7 @@ namespace Pomelo.EntityFrameworkCore.Lolita.Update
         }
 
         public virtual SqlFieldInfo VisitField<TEntity, TProperty>(Expression<Func<TEntity, TProperty>> exp)
-            where TEntity : class,new()
+            where TEntity : class
         {
             var ret = new SqlFieldInfo();
 

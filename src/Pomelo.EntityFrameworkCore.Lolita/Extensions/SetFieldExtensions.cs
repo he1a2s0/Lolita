@@ -11,7 +11,7 @@ namespace Microsoft.EntityFrameworkCore
     public static class DbSetExtensions
     {
         public static LolitaValuing<TEntity, TProperty> SetField<TEntity, TProperty>(this IQueryable<TEntity> self, Expression<Func<TEntity, TProperty>> SetValueExpression)
-            where TEntity : class, new()
+            where TEntity : class
         {
             if (SetValueExpression == null)
                 throw new ArgumentNullException("SetValueExpression");
@@ -24,7 +24,7 @@ namespace Microsoft.EntityFrameworkCore
         }
 
         public static LolitaValuing<TEntity, TProperty> SetField<TEntity, TProperty>(this LolitaSetting<TEntity> self, Expression<Func<TEntity, TProperty>> SetValueExpression)
-            where TEntity : class, new()
+            where TEntity : class
         {
             if (SetValueExpression == null)
                 throw new ArgumentNullException("SetValueExpression");

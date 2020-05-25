@@ -8,7 +8,7 @@ namespace Pomelo.EntityFrameworkCore.Lolita.Update
 {
     public interface IFieldParser
     {
-        SqlFieldInfo VisitField<TEntity, TProperty>(Expression<Func<TEntity, TProperty>> exp) where TEntity: class, new();
+        SqlFieldInfo VisitField<TEntity, TProperty>(Expression<Func<TEntity, TProperty>> exp) where TEntity: class;
 
         string ParseField(SqlFieldInfo field);
 
