@@ -1,19 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>2.3.1</VersionPrefix>
-    <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>Pomelo.EntityFrameworkCore.Lolita.MySql</AssemblyName>
     <PackageId>Pomelo.EntityFrameworkCore.Lolita2.MySql</PackageId>
-    <PackageTags>Entity Framework Core;Extensions;Bulk Update;Bulk Delete</PackageTags>
-    <PackageProjectUrl>https://github.com/he1a2s0/Lolita</PackageProjectUrl>
-    <PackageLicense>https://github.com/he1a2s0/Lolita/blob/master/LICENSE</PackageLicense>
-    <Description>Forked from: https://github.com/PomeloFoundation/Lolita</Description>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>git://github.com/he1a2s0/Lolita</RepositoryUrl>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
 
   <ItemGroup>
