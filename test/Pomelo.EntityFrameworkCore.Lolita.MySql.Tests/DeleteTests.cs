@@ -53,5 +53,17 @@ WHERE ((
     WHERE `p`.`UserId` = `Users`.`Id`) = 0) AND (`Users`.`Role` = 0);", sql, false, true, false);
             }
         }
+
+        [Fact(Skip ="Updating/Deleting for entity which has owned entity/entities is not supported")]
+        public void delete_with_entity_has_owned_entity()
+        {
+            using var db = new MySqlContext();
+
+            var sql = db.Customers
+                .GenerateBulkDeleteSql();
+
+            Assert.Equal(@"DELETE FROM `Customers`
+;", sql, false, true, false);
+        }
     }
 }
