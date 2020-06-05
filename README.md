@@ -5,6 +5,8 @@
 
 * `Update/Delete` for Entity which has `owned entity` is not supported, due to the unnecessary left join(s) in sql that EFCore produces for owned entity/entities. see [EFCore issue 18229](https://github.com/dotnet/efcore/issues/18299)
 
+* Custom column name using `Property(x=>x.Prop).HasColumnName(xxx)` is not supported, please use `ColumnAttribute` instead.
+
 ----
 
 [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/1h9n86igvdk2ku56?svg=true)](https://ci.appveyor.com/project/he1a2s0/lolita)
