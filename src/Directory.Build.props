@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
 	<TargetFramework>netstandard2.1</TargetFramework>
-    <VersionPrefix>2.3.2</VersionPrefix>
+    <VersionPrefix>2.3.3</VersionPrefix>
 	<PackageTags>Entity Framework Core;Extensions;Bulk Update;Bulk Delete</PackageTags>
     <PackageProjectUrl>https://github.com/he1a2s0/Lolita</PackageProjectUrl>
     <PackageLicense>https://github.com/he1a2s0/Lolita/blob/master/LICENSE</PackageLicense>
