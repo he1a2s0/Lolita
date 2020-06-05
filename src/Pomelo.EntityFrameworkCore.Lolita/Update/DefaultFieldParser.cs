@@ -83,12 +83,14 @@ namespace Pomelo.EntityFrameworkCore.Lolita.Update
             ret.Table = GetTableName(et);
             ret.Schema = GetSchemaName(et);
 
+
             // Getting field name
             var body = exp.Body as MemberExpression;
             if (body == null)
             {
                 throw new NotSupportedException(exp.Body.GetType().Name);
             }
+
             var columnAttr = body.Member.GetCustomAttribute<ColumnAttribute>();
             if (columnAttr != null)
             {
@@ -96,7 +98,7 @@ namespace Pomelo.EntityFrameworkCore.Lolita.Update
             }
             else
             {
-                ret.Column = body.Member.Name;
+                ret.Column = et.FindProperty(body.Member.Name).GetColumnName();
             }
 
             return ret;

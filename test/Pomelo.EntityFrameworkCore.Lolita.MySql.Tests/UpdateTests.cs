@@ -125,5 +125,22 @@ SET `Posts`.`IsHighlighted` = `IsPinned`
                 Assert.NotNull(sql);
             }
         }
+
+        [Fact]
+        public void custom_column_names()
+        {
+            using var db = new MySqlContext();
+
+            var sql =
+                db.Items
+                    .Where(_ => _.Name == "Item1" && _.Image == null)
+                    .SetField(_ => _.Image).WithValue("<imageurl>")
+                    .GenerateBulkUpdateSql();
+
+            Assert.Equal(@"UPDATE `Items`
+SET `Items`.`Image_Url` = {0}
+WHERE (`Items`.`item_name` = 'Item1') AND `Items`.`Image_Url` IS NULL;", sql, false, true, false);
+
+        }
     }
 }
