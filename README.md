@@ -1,12 +1,6 @@
 # Lolita
 
 
-## Known Issues:
-
-* `Update/Delete` for Entity which has `owned entity` is not supported, due to the unnecessary left join(s) in sql that EFCore produces for owned entity/entities. see [EFCore issue 18229](https://github.com/dotnet/efcore/issues/18299)
-
-----
-
 [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/1h9n86igvdk2ku56?svg=true)](https://ci.appveyor.com/project/he1a2s0/lolita)
 [![NuGet](https://img.shields.io/nuget/v/Pomelo.EntityFrameworkCore.Lolita2.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.Lolita2/) 
 

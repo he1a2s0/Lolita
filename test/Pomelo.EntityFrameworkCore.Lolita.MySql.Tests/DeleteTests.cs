@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Linq;
+
 using Microsoft.EntityFrameworkCore;
+
 using Pomelo.EntityFrameworkCore.Lolita.Tests.Models;
+
 using Xunit;
 
 namespace Pomelo.EntityFrameworkCore.Lolita.MySql.Tests
@@ -54,16 +57,17 @@ WHERE ((
             }
         }
 
-        [Fact(Skip ="Updating/Deleting for entity which has owned entity/entities is not supported")]
+        [Fact]
         public void delete_with_entity_has_owned_entity()
         {
             using var db = new MySqlContext();
 
             var sql = db.Customers
+                .Where(c => c.Address.City == "WH")
                 .GenerateBulkDeleteSql();
 
             Assert.Equal(@"DELETE FROM `Customers`
-;", sql, false, true, false);
+WHERE `Customers`.`Address_City` = 'WH';", sql, false, true, false);
         }
     }
 }

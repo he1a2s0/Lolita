@@ -98,7 +98,7 @@ namespace Pomelo.EntityFrameworkCore.Lolita.Update
             }
             else
             {
-                ret.Column = et.FindProperty(body.Member.Name).GetColumnName();
+                ret.Column = et.FindProperty(body.Member.Name).GetColumnName(StoreObjectIdentifier.Table(ret.Table, ret.Schema));
             }
 
             return ret;

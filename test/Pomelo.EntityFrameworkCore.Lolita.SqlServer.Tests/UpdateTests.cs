@@ -91,12 +91,11 @@ WHERE [Users].[Id] = 1;", sql, false, true, false);
 
                 Assert.Equal(@"UPDATE [Users]
 SET [Users].[Role] = {0}
-WHERE [Users].[Id] IN (
-    SELECT [p].[Id]
+WHERE EXISTS (
+    SELECT 1
     FROM [Posts] AS [p]
-    WHERE (([p].[IsHighlighted] = CAST(1 AS bit)) OR ([p].[IsPinned] = CAST(1 AS bit))) AND ([p].[Time] >= '2016-01-01T00:00:00.0000000')
-)
- AND ([Users].[Role] = 0);", sql, false, true, false);
+    WHERE ((([p].[IsHighlighted] = CAST(1 AS bit)) OR ([p].[IsPinned] = CAST(1 AS bit))) AND ([p].[Time] >= '2016-01-01T00:00:00.0000000')) AND ([p].[Id] = [Users].[Id])) AND ([Users].[Role] = 0);", 
+    sql, false, true, false);
             }
         }
 

@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using LolitaConsoleAppSample.Models;
+using Microsoft.Extensions.Options;
 
 namespace LolitaConsoleAppSample
 {
@@ -13,7 +14,8 @@ namespace LolitaConsoleAppSample
             var collection = new ServiceCollection();
             collection.AddDbContext<LolitaContext>(x => 
             {
-                x.UseMySql("server=localhost;database=lolita;uid=root;pwd=123456");
+                var connectionString = "server=localhost;database=somedb;uid=someuser;pwd=somepwd;";
+                x.UseMySql(connectionString, serverVersion: ServerVersion.AutoDetect(connectionString));
                 x.UseMySqlLolita();
             });
             var services = collection.BuildServiceProvider();

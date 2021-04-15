@@ -46,9 +46,7 @@ namespace Microsoft.EntityFrameworkCore
 
         private static (IRelationalCommand, IRelationalTypeMappingSource) GetRelationalComponents_v2(RelationalCommandCache relationalCommandCache, QuerySqlGenerator sqlGenerator, IReadOnlyDictionary<string, object> parameterValues)
         {
-#pragma warning disable EF1001 // Internal EF Core API usage.
             var command = relationalCommandCache.GetRelationalCommand(parameterValues);
-#pragma warning restore EF1001 // Internal EF Core API usage.
             var dependencies = sqlGenerator.GetType().GetProperty("Dependencies", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(sqlGenerator) as QuerySqlGeneratorDependencies;
             var mappingSource = dependencies.RelationalCommandBuilderFactory.Create().TypeMappingSource;
 
