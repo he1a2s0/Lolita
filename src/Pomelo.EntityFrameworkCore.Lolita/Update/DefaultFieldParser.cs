@@ -58,18 +58,15 @@ namespace Pomelo.EntityFrameworkCore.Lolita.Update
             return sqlGenerationHelper.DelimitIdentifier(field.Table);
         }
 
-        protected virtual string GetTableName(IEntityType type)
-        {
-            return type.GetTableName();
-        }
-
-        protected virtual string GetSchemaName(IEntityType type)
-        {
-            return type.GetSchema();
-        }
-
         public virtual SqlFieldInfo VisitField<TEntity, TProperty>(Expression<Func<TEntity, TProperty>> exp)
             where TEntity : class
+        {
+            var et = context.Model.FindEntityType(typeof(TEntity));
+
+            return VisitField(exp, et);
+        }
+
+        public virtual SqlFieldInfo VisitField<TEntity, TProperty>(Expression<Func<TEntity, TProperty>> exp, IEntityType et) where TEntity : class
         {
             var ret = new SqlFieldInfo();
 
@@ -79,10 +76,8 @@ namespace Pomelo.EntityFrameworkCore.Lolita.Update
                 throw new ArgumentException("Too many parameters in the expression.");
             }
             var param = exp.Parameters.Single();
-            var et = context.Model.FindEntityType(typeof(TEntity));
-            ret.Table = GetTableName(et);
-            ret.Schema = GetSchemaName(et);
-
+            ret.Table = et.GetTableName();
+            ret.Schema = et.GetSchema();
 
             // Getting field name
             var body = exp.Body as MemberExpression;

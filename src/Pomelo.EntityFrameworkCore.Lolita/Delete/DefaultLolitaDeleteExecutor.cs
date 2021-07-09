@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage;
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,9 +43,11 @@ namespace Pomelo.EntityFrameworkCore.Lolita.Delete
 
         public virtual string GenerateSql<TEntity>(IQueryable<TEntity> lolita) where TEntity : class
         {
-            var et = _context.Model.FindEntityType(typeof(TEntity));
+            var realEntityType = lolita.GetRealEntityType();
+            if (realEntityType == null)
+                realEntityType = _context.Model.FindEntityType(typeof(TEntity));
 
-            var fullTable = GetFullTableName(et);
+            var fullTable = GetFullTableName(realEntityType);
 
             var originalSql = lolita.ToSql(out IDictionary<string, string> tableAliases);
 

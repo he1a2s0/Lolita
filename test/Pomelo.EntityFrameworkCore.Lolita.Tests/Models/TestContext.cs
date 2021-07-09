@@ -20,6 +20,16 @@ namespace Pomelo.EntityFrameworkCore.Lolita.Tests.Models
             modelBuilder.Entity<Item>()
                 .Property(_ => _.Name)
                 .HasColumnName("item_name");
+
+            modelBuilder.Entity<CustomModelA>(t =>
+            {
+                t.ToTable("model_a");
+            });
+
+            modelBuilder.Entity<CustomModelB>(b =>
+            {
+                b.ToTable("model_b");
+            });
         }
     }
 }

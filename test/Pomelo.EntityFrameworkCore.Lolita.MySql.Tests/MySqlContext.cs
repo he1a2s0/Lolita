@@ -13,7 +13,7 @@ namespace Pomelo.EntityFrameworkCore.Lolita.MySql.Tests
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = "server=localhost;database=somedb;uid=someuser;pwd=somepwd;";
+            var connectionString = "server=localhost;database=lolita_test;uid=hewen;pwd=meiyoumima;";
             optionsBuilder.UseMySql(connectionString, serverVersion: ServerVersion.AutoDetect(connectionString));
             optionsBuilder.UseMySqlLolita();
         }

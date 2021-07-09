@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Linq;
+
 using Microsoft.EntityFrameworkCore;
+
 using Pomelo.EntityFrameworkCore.Lolita.Tests.Models;
+
 using Xunit;
 
 namespace Pomelo.EntityFrameworkCore.Lolita.MySql.Tests
@@ -139,6 +142,49 @@ SET `Posts`.`IsHighlighted` = `IsPinned`
 SET `Items`.`Image_Url` = {0}
 WHERE (`Items`.`item_name` = 'Item1') AND `Items`.`Image_Url` IS NULL;", sql, false, true, false);
 
+        }
+
+        [Fact]
+        public void IQueryable_Covariance_Test()
+        {
+            using var db = new MySqlContext();
+
+            var query = Query(db, typeof(CustomModelA));
+
+            var sql =
+                query
+                     .SetField(_ => _.StringProperty).WithValue("test")
+                     .SetField(_ => _.IntProperty).Plus(1)
+                     .GenerateBulkUpdateSql();
+
+            sql =
+                query.Where(_ => _.Id > 0)
+                     .SetField(_ => _.StringProperty).WithValue("test")
+                     .SetField(_ => _.IntProperty).Plus(1)
+                     .GenerateBulkUpdateSql();
+
+            sql =
+                query.Where(_ => _.Id > 0)
+                    .Where(_ => _.IntProperty > 0)
+                    .SetField(_ => _.StringProperty).WithValue("test")
+                    .SetField(_ => _.IntProperty).Plus(1)
+                    .GenerateBulkUpdateSql();
+
+
+            sql = query.GenerateBulkDeleteSql();
+
+            sql = query.Where(_ => _.Id > 0).GenerateBulkDeleteSql();
+
+            sql = query.Where(_ => _.Id > 0).Where(_ => _.IntProperty > 0).GenerateBulkDeleteSql();
+
+            Assert.True(true);
+        }
+
+        private IQueryable<ICustomModelInterface> Query(MySqlContext context, Type type)
+        {
+            return type == typeof(CustomModelA) ?
+                context.Set<CustomModelA>() :
+                context.Set<CustomModelB>();
         }
     }
 }
